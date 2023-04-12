@@ -19,15 +19,19 @@ def transcribe_audio_to_text(filename):
 
 
 def generate_response(prompt):
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=prompt,
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content":
+                "You are a helpful assistant."},
+            {"role": "user", "content": prompt},
+        ],
         max_tokens=4000,
         n=1,
-        stop=None,
+        stop=["\nUser:"],
         temperature=0.5,
     )
-    return response["choices"][0]["text"]
+    return response["choices"][0]["message"]["content"]
 
 
 def speak_text(text):
