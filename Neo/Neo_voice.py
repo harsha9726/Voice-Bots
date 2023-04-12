@@ -5,8 +5,6 @@ import os
 
 openai.api_key = os.getenv("GPT_API")
 
-print(os.getenv("GPT_API"))
-
 engine = pyttsx3.init()
 
 
@@ -39,13 +37,15 @@ def speak_text(text):
 
 def main():
     while True:
-        print("Say 'Neo' to start recording question...")
+        print("Say 'Akira' to start recording question...")
         with sr.Microphone() as source:
             recognizer = sr.Recognizer()
             audio = recognizer.listen(source)
             try:
                 transcription = recognizer.recognize_google(audio)
-                if transcription.lower() == 'neo':
+                if transcription.lower() == 'stop':
+                    break
+                if transcription.lower() == 'akira':
                     # Record audio
                     filename = "input.wav"
                     print("Say your question...")
@@ -69,3 +69,6 @@ def main():
                         speak_text(response)
             except Exception as e:
                 print("An error occurred: {}".format(e))
+
+
+main()
